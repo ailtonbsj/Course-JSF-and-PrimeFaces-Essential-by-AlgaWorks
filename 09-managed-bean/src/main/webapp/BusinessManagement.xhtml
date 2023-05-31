@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+ 	xmlns:f="http://xmlns.jcp.org/jsf/core">
+ 	
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Gestão Empresas</title>
+	<h:outputStylesheet library="mylibrary" name="style.css" />
+</h:head>
+
+<h:body>
+	<header>
+		<h:graphicImage library="mylibrary" name="logo.png" />
+	</header>
+	
+	<div id="content">
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Razão Social: " for="corporateName" />
+				<h:inputText id="corporateName" />
+				
+				<h:outputLabel value="Nome Fantasia: " for="fantasyName" />
+				<h:inputText id="fantasyName" />
+				
+				<h:outputLabel value="Tipo empresa: " for="type" />
+				<h:selectOneMenu id="type">
+					<f:selectItem itemLabel="Selecione..." />
+					<f:selectItem itemLabel="MEI" itemValue="MEI" />
+				</h:selectOneMenu>
+				
+				<h:outputLabel />
+				<h:commandButton value="Salvar" />
+			</h:panelGrid>
+			
+			<h:dataTable value="#{[0, 0, 0, 0]}">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Razão Social" />
+					</f:facet>
+					<h:outputText value="Empresa 1 LTDA" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Nome fantasia" />
+					</f:facet>
+					<h:outputText value="Empresa 1" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Tipo Empresa" />
+					</f:facet>
+					<h:outputText value="LTDA" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</div>
+
+	<footer>
+		Course of JSF and PrimeFaces Essential
+	</footer>
+</h:body>
+
+</html>
