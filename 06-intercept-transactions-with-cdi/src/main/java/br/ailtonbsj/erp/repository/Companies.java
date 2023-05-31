@@ -16,6 +16,9 @@ public class Companies implements Serializable {
 	@Inject
 	private EntityManager manager;
 	
+	public Companies() {
+	}
+	
 	public Companies(EntityManager manager) {
 		this.manager = manager;
 	}
