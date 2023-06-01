@@ -18,19 +18,20 @@
 		<h:form>
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Razão Social: " for="corporateName" />
-				<h:inputText id="corporateName" />
+				<h:inputText id="corporateName" value="#{businessManagementBean.company.corporateName}" />
 				
 				<h:outputLabel value="Nome Fantasia: " for="fantasyName" />
-				<h:inputText id="fantasyName" />
+				<h:inputText id="fantasyName" value="#{businessManagementBean.company.fantasyName}" />
 				
 				<h:outputLabel value="Tipo empresa: " for="type" />
-				<h:selectOneMenu id="type">
+				<h:selectOneMenu id="type" value="#{businessManagementBean.company.type}">
 					<f:selectItem itemLabel="Selecione..." />
-					<f:selectItem itemLabel="MEI" itemValue="MEI" />
+					<f:selectItems value="#{businessManagementBean.companyTypes}"
+						var="companyType" itemLabel="#{companyType.description}" itemValue="#{companyType}" />
 				</h:selectOneMenu>
 				
 				<h:outputLabel />
-				<h:commandButton value="Salvar" />
+				<h:commandButton value="Salvar" actionListener="#{businessManagementBean.save}" />
 			</h:panelGrid>
 			
 			<h:dataTable value="#{[0, 0, 0, 0]}">

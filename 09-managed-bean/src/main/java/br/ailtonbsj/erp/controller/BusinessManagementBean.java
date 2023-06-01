@@ -5,7 +5,12 @@ import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import br.ailtonbsj.erp.model.Company;
+import br.ailtonbsj.erp.model.CompanyType;
+
 /*
+ * TYPES OF SCOPED IN JSF
+ * 
  * @RequestScoped from javax.enterprise.context.RequestScoped
  * @ViewScoped from javax.faces.view.ViewScoped
  * @SessionScoped from javax.enterprise.context.SessionScoped
@@ -18,13 +23,19 @@ public class BusinessManagementBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static Integer NUMBER = 0;
+	private Company company = new Company();
 	
-	public BusinessManagementBean() {
-		NUMBER++;
+	public void save() {
+		System.out.println(this.company.getCorporateName() + " - " +
+				this.company.getFantasyName() + " - " +
+				this.company.getType());
 	}
 	
-	public Integer getNumber() {
-		return NUMBER;
+	public Company getCompany() {
+		return company;
+	}
+	
+	public CompanyType[] getCompanyTypes() {
+		return CompanyType.values();
 	}
 }
