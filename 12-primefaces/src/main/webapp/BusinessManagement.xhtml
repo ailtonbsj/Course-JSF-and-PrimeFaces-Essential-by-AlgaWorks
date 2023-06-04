@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+ 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+ 	xmlns:p="http://primefaces.org/ui">
+ 	
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Gestão Empresas</title>
+	<h:outputStylesheet library="mylibrary" name="style.css" />
+</h:head>
+
+<h:body>
+	<header>
+		<h:graphicImage library="mylibrary" name="logo.png" />
+	</header>
+	
+	<div id="content">
+		<h:form>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Razão Social: " for="corporateName" />
+				<h:panelGroup>
+					<p:inputText id="corporateName" value="#{businessManagementBean.company.corporateName}"
+						label="Razão Social" required="true" />
+					<p:message for="corporateName" />
+				</h:panelGroup>
+				
+				<p:outputLabel value="Nome Fantasia: " for="fantasyName" />
+				<p:inputText id="fantasyName" value="#{businessManagementBean.company.fantasyName}" />
+				
+				<p:outputLabel value="Tipo empresa: " for="type" />
+				<p:selectOneMenu id="type" value="#{businessManagementBean.company.type}">
+					<f:selectItem itemLabel="Selecione..." />
+					<f:selectItems value="#{businessManagementBean.companyTypes}"
+						var="companyType" itemLabel="#{companyType.description}" itemValue="#{companyType}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="CNPJ: " for="cnpj" />
+				<h:panelGroup>
+					<p:inputText id="cnpj" value="#{businessManagementBean.company.cnpj}" label="CNPJ" required="true">
+						<f:validateLength minimum="18" maximum="18" />
+					</p:inputText>
+					<p:message for="cnpj" />
+				</h:panelGroup>
+				
+				<p:outputLabel value="Data fundação: " for="fundationDate" />
+				<h:panelGroup>
+					<p:inputText id="fundationDate" value="#{businessManagementBean.company.fundationDate}"
+						label="Data fundação">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+					<p:message for="fundationDate" />
+				</h:panelGroup>
+				
+				<p:outputLabel value="Faturamento: " for="billing" />
+				<h:panelGroup>
+					<p:inputText id="billing" value="#{businessManagementBean.company.billing}"
+						label="Faturamento">
+						<f:convertNumber pattern="#,##0.00" />
+						<f:validateDoubleRange minimum="0" />
+					</p:inputText>
+					<p:message for="billing" />
+				</h:panelGroup>
+				
+				<h:outputLabel />
+				<p:commandButton value="Salvar" actionListener="#{businessManagementBean.save}" update="@form" />
+				
+				<h:outputLabel />
+				<h:commandLink value="Ajuda?" action="#{businessManagementBean.help}" />
+			</h:panelGrid>
+			
+			<p:dataTable value="#{[0, 0, 0, 0]}">
+				<p:column headerText="Razão Social">
+					<h:outputText value="Empresa 1 LTDA" />
+				</p:column>
+				
+				<p:column headerText="Nome fantasia">
+					<h:outputText value="Empresa 1" />
+				</p:column>
+				
+				<p:column headerText="Tipo Empresa">
+					<h:outputText value="LTDA" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</div>
+
+	<footer>
+		Course of JSF and PrimeFaces Essential
+	</footer>
+</h:body>
+
+</html>
