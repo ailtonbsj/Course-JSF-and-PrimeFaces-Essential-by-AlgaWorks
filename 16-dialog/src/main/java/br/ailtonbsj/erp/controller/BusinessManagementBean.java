@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.ailtonbsj.erp.model.Company;
 import br.ailtonbsj.erp.repository.Companies;
+import br.ailtonbsj.erp.util.FacesMessages;
 
 /*
  * TYPES OF SCOPED IN JSF
@@ -28,7 +29,19 @@ public class BusinessManagementBean implements Serializable {
 	@Inject
 	private Companies companies;
 	
+	@Inject
+	private FacesMessages messages;
+	
 	private List<Company> listOfCompanies;
+	
+	private String searchTerm;
+		
+	public void fetch() {
+		listOfCompanies = companies.fetch(searchTerm);
+		if(listOfCompanies.isEmpty()) {
+			messages.info("Consulta não retornou registros.");
+		}
+	}
 	
 	public void listAllCompanies() {
 		listOfCompanies = companies.listAll();
@@ -40,5 +53,13 @@ public class BusinessManagementBean implements Serializable {
 
 	public void setListOfCompanies(List<Company> listOfCompanies) {
 		this.listOfCompanies = listOfCompanies;
+	}
+	
+	public String getSearchTerm() {
+		return searchTerm;
+	}
+	
+	public void setSearchTerm(String searchTerm) {
+		this.searchTerm = searchTerm;
 	}
 }

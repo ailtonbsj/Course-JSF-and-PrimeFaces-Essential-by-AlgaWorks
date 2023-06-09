@@ -34,8 +34,8 @@ public class Companies implements Serializable {
 	public List<Company> fetch(String name) {
 		// Using JPQL
 		TypedQuery<Company> q = manager
-				.createQuery("from Company where fantasyName like :fantasyName", Company.class);
-		q.setParameter("fantasyName", name + "%");
+				.createQuery("from Company where corporateName like :corporateName", Company.class);
+		q.setParameter("corporateName", "%" + name + "%");
 		return q.getResultList();
 	}
 	
