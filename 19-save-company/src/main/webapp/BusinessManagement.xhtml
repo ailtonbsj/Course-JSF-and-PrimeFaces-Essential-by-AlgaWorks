@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+ 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+ 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+ 	xmlns:p="http://primefaces.org/ui"
+ 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ 	template="WEB-INF/template/Layout.xhtml">
+
+<ui:define name="title">Cadastro de Empresas</ui:define>
+
+<ui:define name="content">
+	<f:metadata>
+		<f:viewAction action="#{businessManagementBean.listAllCompanies}" />
+	</f:metadata>
+	
+	<h:form>
+		<p:messages autoUpdate="true" />
+	
+		<p:toolbar>
+			<f:facet name="left">
+				<p:inputText id="inputSearchTerm" placeholder="Digite um termo para pesquisa..." size="30"
+					value="#{businessManagementBean.searchTerm}" />	
+				<p:commandButton value="Pesquisar" icon="fa fa-search" process="@this inputSearchTerm"
+					actionListener="#{businessManagementBean.fetch}" update="companiesDataTable" />
+				
+				<span class="ui-separator">
+	                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+	            </span>
+	            
+	            <p:commandButton value="Nova" icon="fa fa-plus"
+	            	actionListener="#{businessManagementBean.prepareNewCompany}"
+	            	oncomplete="PF('companyDialogVar').show()"
+	            	update="companyDialog" process="@this" />
+	            
+				<span class="ui-separator">
+	                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+	            </span>
+	            
+	            <p:commandButton title="Editar" icon="fa fa-edit" />
+	            
+	            <p:commandButton title="Excluir" icon="fa fa-trash" />
+	            
+				<span class="ui-separator">
+	                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+	            </span>
+	            
+	            <p:commandButton title="Exportar para o Excel" icon="fa fa-file-excel-o" />			
+			</f:facet>
+		</p:toolbar>
+		
+		<p:spacer height="20px" />
+	
+		<p:dataTable id="companiesDataTable" value="#{businessManagementBean.listOfCompanies}"
+			emptyMessage="Nenhuma informação a ser exibida" paginator="true"
+			rows="10" paginatorPosition="bottom" var="company">
+			<p:column headerText="Razão Social" sortBy="#{company.corporateName}">
+				<h:outputText value="#{company.corporateName}" />
+			</p:column>
+			<p:column headerText="Nome fantasia">
+				<h:outputText value="#{company.fantasyName}" />
+			</p:column>
+			<p:column headerText="Tipo Empresa">
+				<h:outputText value="#{company.type}" />
+			</p:column>
+			<p:column headerText="Ramo atividade">
+				<h:outputText value="#{company.activityBranch.description}" />
+			</p:column>
+		</p:dataTable>
+		
+		<p:dialog id="companyDialog" header="Nova empresa" widgetVar="companyDialogVar" modal="true"
+			resizable="false" closeOnEscape="true">
+			<h:panelGrid id="companyPanelGrid" columns="2" rendered="#{businessManagementBean.company ne null}">
+				<p:outputLabel value="Razão Social: " for="corporateName" />
+				<p:inputText id="corporateName" size="80" maxlength="120"
+					value="#{businessManagementBean.company.corporateName}" />
+				
+				<p:outputLabel value="Nome Fantasia: " for="fantasyName" />
+				<p:inputText id="fantasyName" size="80" maxlength="120"
+					value="#{businessManagementBean.company.fantasyName}" />
+				
+				<p:outputLabel value="Tipo empresa: " for="type" />
+				<p:selectOneMenu id="type" value="#{businessManagementBean.company.type}">
+					<f:selectItem itemLabel="Selecione..." />
+					<f:selectItems value="#{businessManagementBean.companyTypes}"
+						var="typesOfCompany" itemLabel="#{typesOfCompany.description}"
+						itemValue="#{typesOfCompany}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="CNPJ: " for="cnpj" />
+				<p:inputMask id="cnpj" mask="99.999.999/9999-99" size="18" maxlength="18"
+					value="#{businessManagementBean.company.cnpj}" />
+				
+				<p:outputLabel value="Data Fundação: " for="fundationDate" />
+				<p:calendar id="fundationDate" pattern="dd/MM/yyyy" size="30"
+					value="#{businessManagementBean.company.fundationDate}" />
+				
+				<p:outputLabel value="Ramo atividade: " for="activityBranch" />
+				<p:autoComplete id="activityBranch" size="80" var="activityBranch"
+					completeMethod="#{businessManagementBean.completeActivityBranch}"
+					converter="#{businessManagementBean.activityBranchConverter}"
+					itemLabel="#{activityBranch.description}" itemValue="#{activityBranch}"
+					value="#{businessManagementBean.company.activityBranch}" />
+				
+				<h:outputLabel />
+				<p:commandButton value="Salvar" actionListener="#{businessManagementBean.save}"
+					update="companiesDataTable companyPanelGrid" oncomplete="PF('companyDialogVar').hide()"
+					process="companyDialog" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</ui:define>
+
+</ui:composition>
