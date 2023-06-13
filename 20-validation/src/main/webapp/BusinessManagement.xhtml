@@ -30,7 +30,9 @@
 	            <p:commandButton value="Nova" icon="fa fa-plus"
 	            	actionListener="#{businessManagementBean.prepareNewCompany}"
 	            	oncomplete="PF('companyDialogVar').show()"
-	            	update="companyDialog" process="@this" />
+	            	update="companyDialog" process="@this">
+	            	<p:resetInput target="companyDialog" />	
+	            </p:commandButton>	
 	            
 				<span class="ui-separator">
 	                <span class="ui-icon ui-icon-grip-dotted-vertical" />
@@ -71,6 +73,8 @@
 			resizable="false" closeOnEscape="true">
 			<p:messages id="companyMessages" />
 			
+			<p:defaultCommand target="saveBtn" scope="companyDialog" />
+			
 			<h:panelGrid id="companyPanelGrid" columns="2" rendered="#{businessManagementBean.company ne null}">
 				<p:outputLabel value="Razão Social: " for="corporateName" />
 				<p:inputText id="corporateName" size="80" maxlength="120"
@@ -105,7 +109,7 @@
 				
 				<h:outputLabel />
 				<p:commandButton value="Salvar" actionListener="#{businessManagementBean.save}"
-					update="companyPanelGrid companyMessages"
+					id="saveBtn" update="companyPanelGrid companyMessages"
 					oncomplete="if (!args.validationFailed) PF('companyDialogVar').hide()"
 					process="companyDialog" />
 			</h:panelGrid>
