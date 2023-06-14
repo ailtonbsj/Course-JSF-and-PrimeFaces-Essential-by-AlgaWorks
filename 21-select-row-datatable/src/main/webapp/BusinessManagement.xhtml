@@ -39,10 +39,18 @@
 	            </span>
 	            
 	            <p:commandButton title="Editar" icon="fa fa-edit"
-	            	disabled="#{not businessManagementBean.companySelected}" />
+	            	disabled="#{not businessManagementBean.companySelected}"
+	            	actionListener="#{businessManagementBean.prepareEditCompany}"
+	            	oncomplete="PF('companyDialogVar').show()"
+	            	update="companyDialog" process="@this">
+	            	<p:resetInput target="companyDialog" />
+	            </p:commandButton>
 	            
 	            <p:commandButton title="Excluir" icon="fa fa-trash"
-	            	disabled="#{not businessManagementBean.companySelected}" />
+	            	disabled="#{not businessManagementBean.companySelected}"
+	            	actionListener="#{businessManagementBean.remove}"
+	            	update="messages companiesDataTable toolbar"
+	            	process="@this" />
 	            
 				<span class="ui-separator">
 	                <span class="ui-icon ui-icon-grip-dotted-vertical" />

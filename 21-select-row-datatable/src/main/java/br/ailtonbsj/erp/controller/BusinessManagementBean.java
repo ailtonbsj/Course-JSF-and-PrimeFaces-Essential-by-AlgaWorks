@@ -62,20 +62,35 @@ public class BusinessManagementBean implements Serializable {
 		company = new Company();
 	}
 	
-	public void save() {
-		registerCompanyService.save(company);
+	public void prepareEditCompany() {
+		activityBranchConverter = new ActivityBranchConverter(Arrays.asList(company.getActivityBranch()));
+	}
+	
+	public void refreshRegister() {
 		if(hadSearch()) fetch();
 		else listAllCompanies();
+	}
+	
+	public void save() {
+		registerCompanyService.save(company);
+		refreshRegister();
 		messages.info("Empresa cadastrada com sucesso!");
 		RequestContext.getCurrentInstance().update(
 				Arrays.asList("frm:companiesDataTable", "frm:messages"));
+	}
+	
+	public void remove() {
+		registerCompanyService.remove(company);
+		company = null;
+		refreshRegister();
+		messages.info("Empresa excluída com sucesso!");
 	}
 		
 	public void fetch() {
 		listOfCompanies = companies.fetch(searchTerm);
 		if(listOfCompanies.isEmpty()) {
+			messages.info("Consulta não retornou registros.");
 		}
-		messages.info("Consulta não retornou registros.");
 	}
 	
 	public void listAllCompanies() {
