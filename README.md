@@ -5,7 +5,7 @@
 <img src=".github/logo.png">
 </p>
 
-An course of JavaServer Faces and PrimeFaces from [Youtube Channel](https://youtu.be/ezwgBvsd6Ps).
+A course of JavaServer Faces and PrimeFaces from [Youtube Channel](https://youtu.be/ezwgBvsd6Ps).
 
 Creator: AlgaWorks
 
